@@ -578,14 +578,14 @@ def main():
         display_df = (
             filtered_df[["name", "type", "country_name", "continent_name",
                           "elevation_ft", "iata_code", "municipality", "latitude", "longitude"]]
+            .sort_values(sort_col if sort_col in filtered_df.columns else "name",
+                         ascending=sort_asc)
             .rename(columns={
                 "name": "Airport Name", "type": "Type",
                 "country_name": "Country", "continent_name": "Continent",
                 "elevation_ft": "Elevation (ft)", "iata_code": "IATA",
                 "municipality": "City",
             })
-            .sort_values(sort_col if sort_col in filtered_df.columns else "name",
-                         ascending=sort_asc)
             .reset_index(drop=True)
         )
         display_df["Type"] = display_df["Type"].map(lambda t: AIRPORT_TYPES.get(t, t))
